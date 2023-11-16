@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Weather Prediction</title>
+    <!--style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        form {
+            width: 500px;
+            margin: 0 auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input {
+            width: 100%;
+            padding: 5px;
+            border: 1px solid #ccc;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style-->
+    
+    <style>
+        body {
+            background-image: url("{{ url_for('static', filename='images/weather1.jpg') }}");
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+            background-size: cover; 
+            background-repeat: no-repeat;
+        }
+
+        .centered-div {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            position: relative; /* Ensure proper alignment */
+        }
+
+        h1 {
+            text-align: center;
+            color: aliceblue;
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #666;
+            color: aliceblue;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            width: calc(100% - 24px);
+            padding: 8px 12px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            
+        }
+
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 20px 0;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            border-radius: 4px;
+            text-align: center;
+        }
+
+        .result {
+            text-align: center;
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 4px;
+        }
+    </style>
+    <script>
+        function validateForm(){
+            var textBoxValue1 = document.getElementById('location_name').value;
+            if (textBoxValue1.trim() === ''){
+                console.log(textBoxValue1)
+                alert("Please enter a value")
+                return false;
+            }
+            if (!isNaN(textBoxValue1))
+            {
+                alert("Please enter valid location name");
+                return false;
+            }
+            var textBoxValue2 = document.getElementById('region').value;
+            if (textBoxValue2.trim() === ''){
+                console.log(textBoxValue2)
+                alert("Please enter a value")
+                return false;
+            }
+            if (!isNaN(textBoxValue2))
+            {
+                alert("Please enter valid region");
+                return false;
+            }
+            return true;
+        }
+        
+    </script>
+</head>
+<body>
+    <div class="container">
+    <form method="POST" action="/index" onsubmit="return validateForm()">
+    <h1 align="center">Weather Prediction</h1>
+    
+            <!-- Your content here -->
+
+        <label for="region">State:</label>
+        <input type="text" placeholder="Enter state" id="region" name="region" required><br> 
+        
+        <label for="location_name">Location Name:</label>
+        <input type="text" placeholder="Enter location" id="location_name" name="location_name"  required><br>
+        
+        <label for="latitude">Latitude:</label>
+        <input type="number" placeholder="Enter latitude" step="0.01" min=1 max=35 name="latitude" required><br>
+
+        <label for="longitude">Longitude:</label>
+        <input type="number" placeholder="Enter longitude" step="0.01" min=65 max=100 name="longitude" required><br>
+
+        <label for="temperature_celsius">Temperature (°C):</label>
+        <input type="number" placeholder="Enter temperature in celsius" step="0.01" min=-5 max=50 name="temperature_celsius" required><br>
+
+        <label for="wind_kph">Wind Speed (kph):</label>
+        <input type="number" placeholder="Enter wind speed in kph" step="0.01" min=1 max=50 name="wind_kph" required><br>
+
+        <label for="pressure_mb">Pressure (mb):</label>
+        <input type="number" placeholder="Enter pressure in mb" step="0.01" min=990 max=1050 name="pressure_mb" required><br>
+
+        <label for="precip_mm">Precipitation (mm):</label>
+        <input type="number" placeholder="Enter precipitation in mm" step="0.01" min=0 max=50 name="precip_mm" required><br>
+
+        <label for="humidity">Humidity (%):</label>
+        <input type="number" placeholder="Enter % of humidity" step="0.01" min=10 max=100 name="humidity" required><br>
+
+        <label for="cloud">Cloud Cover (%):</label>
+        <input type="number" placeholder="Enter % of cloud cover" step="0.01" min=0 max=100 name="cloud" required><br>
+
+        <label for="visibility_km">Visibility (km):</label>
+        <input type="number" placeholder="Enter visibility in km" step="0.01" min=0 max=15 name="visibility_km" required><br><br>
+        <label for="visibility_km"> <input type="submit" value="Predict Weather">
+    </form>
+
+
+    <!--p align="center">The predicted weather condition is: {{ predicted_condition_text }}</p-->
+     {% if predicted_condition_text %}
+    <div class="result">
+        <h3>Prediction Result:</h3>
+        <p class="lead">{{ predicted_condition_text }}</p>
+     {% endif %}
+    </div>
+        </div>
+
+
+</body>
+</html>
+
